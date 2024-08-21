@@ -10,21 +10,21 @@ Need to check settings.py for edit the domains
 
 virtualhostmiddleware.py:
 =========================================================
-if settings.DEVELOPMENT_MODE:
-virtual_hosts = {
-"localhost:8000": "Crunchscaled.urls",
-"localhost:9000": "Crunchscaled.ecomerce_urls",
-}
-
-else:
-virtual_hosts = {
- "www.shopatimall.com": "Crunchscaled.ecomerce_urls",
- "test.krunchiq.com": "Crunchscaled.url",
-
-"www.admin.mediascaled.com": "Crunchscaled.urls",
-"www.e-mall247.com": "Crunchscaled.ecomerce_urls",
-"www.admin.krunchiq.com": "Crunchscaled.url",
-}
+    if settings.DEVELOPMENT_MODE:
+    virtual_hosts = {
+        "localhost:8000": "Crunchscaled.urls",
+        "localhost:9000": "Crunchscaled.ecomerce_urls",
+    }
+    
+    else:
+    virtual_hosts = {
+         "www.shopatimall.com": "Crunchscaled.ecomerce_urls",
+         "test.krunchiq.com": "Crunchscaled.url",
+        
+        "www.admin.mediascaled.com": "Crunchscaled.urls",
+        "www.e-mall247.com": "Crunchscaled.ecomerce_urls",
+        "www.admin.krunchiq.com": "Crunchscaled.url",
+    }
 
 
 
@@ -72,24 +72,24 @@ sudo touch gunicorn.conf
 sudo nano gunicorn.conf:
 =========================================
 
-[program:gunicorn8000]
-directory=/home/ubuntu/project
-command=/home/ubuntu/env/bin/gunicorn --workers 3 --bind 0.0.0.0:8000 project_name.wsgi:application
-autostart=true
-autorestart=true
-stderr_logfile=/var/log/gunicorn/gunicorn8000.err.log
-stdout_logfile=/var/log/gunicorn/gunicorn8000.out.log
-
-[program:gunicorn9000]
-directory=/home/ubuntu/project
-command=/home/ubuntu/env/bin/gunicorn --workers 3 --bind 0.0.0.0:9000 project_name.wsgi:application
-autostart=true
-autorestart=true
-stderr_logfile=/var/log/gunicorn/gunicorn9000.err.log
-stdout_logfile=/var/log/gunicorn/gunicorn9000.out.log
-
-[group:guni]
-programs: gunicorn8000, gunicorn9000
+      [program:gunicorn8000]
+      directory=/home/ubuntu/project
+      command=/home/ubuntu/env/bin/gunicorn --workers 3 --bind 0.0.0.0:8000 project_name.wsgi:application
+      autostart=true
+      autorestart=true
+      stderr_logfile=/var/log/gunicorn/gunicorn8000.err.log
+      stdout_logfile=/var/log/gunicorn/gunicorn8000.out.log
+      
+      [program:gunicorn9000]
+      directory=/home/ubuntu/project
+      command=/home/ubuntu/env/bin/gunicorn --workers 3 --bind 0.0.0.0:9000 project_name.wsgi:application
+      autostart=true
+      autorestart=true
+      stderr_logfile=/var/log/gunicorn/gunicorn9000.err.log
+      stdout_logfile=/var/log/gunicorn/gunicorn9000.out.log
+      
+      [group:guni]
+      programs: gunicorn8000, gunicorn9000
 
 
 ==============================================
@@ -117,30 +117,38 @@ sudo nano default
 
 
 # For domain served on port 8000
-server {
-    listen 80;
-    server_name admin.krunchiq.com;
-
-    location / {
-        include proxy_params;
-        proxy_pass http://127.0.0.1:8000;
-    }
-}
+      server {
+          listen 80;
+          server_name admin.krunchiq.com;
+      
+          location / {
+              include proxy_params;
+              proxy_pass http://127.0.0.1:8000;
+          }
+      }
 
 # For domain served on port 9000
-server {
-    listen 80;
-    server_name www.e-mall247.com;
-
-    location / {
-        include proxy_params;
-        proxy_pass http://127.0.0.1:9000;
-    }
-}
+     server {
+         listen 80;
+         server_name www.e-mall247.com;
+     
+         location / {
+             include proxy_params;
+             proxy_pass http://127.0.0.1:9000;
+         }
+     }
 
 
 
 =============================================================
+
+# Check Nginx Status
+    sudo systemctl status nginx
+    sudo systemctl start nginx
+
+# Test Nginx Configuration
+    sudo nginx -t
+
 
 
 ## make some line into comments - example : root /var/www/html;, index index.html, uri uri try_files ...
