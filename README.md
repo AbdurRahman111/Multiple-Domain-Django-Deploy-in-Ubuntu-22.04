@@ -153,29 +153,29 @@ sudo nano default
 
 ## make some line into comments - example : root /var/www/html;, index index.html, uri uri try_files ...
 
-and add in location /:
-include proxy_params;
-proxy_pass http://unix:/home/ubuntu/project/app.sock;
+# and add in location /:
+    include proxy_params;
+    proxy_pass http://unix:/home/ubuntu/project/app.sock;
 
 
-add server name ip_address www.domain.com domain.com;
-
-sudo systemctl reload nginx
-
-
-there need permission so add user:
-sudo gpasswd -a www-data ubuntu
+# add server name ip_address www.domain.com domain.com;
 
 sudo systemctl reload nginx
 
 
-sudo systemctl stop supervisor
-sudo systemctl start supervisor
-
-sudo systemctl reload nginx
-
-sudo systemctl restart nginx
-sudo supervisorctl restart all
+# there need permission so add user:
+    sudo gpasswd -a www-data ubuntu
+    
+    sudo systemctl reload nginx
+    
+    
+    sudo systemctl stop supervisor
+    sudo systemctl start supervisor
+    
+    sudo systemctl reload nginx
+    
+    sudo systemctl restart nginx
+    sudo supervisorctl restart all
 
 
 
