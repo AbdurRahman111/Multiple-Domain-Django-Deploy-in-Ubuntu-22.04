@@ -72,8 +72,10 @@ sudo touch gunicorn.conf
 
 =============================================
 # for increase loading time 
+
 --workers 4 --timeout 600 --limit-request-line 16384 --limit-request-fields 65536 --limit-request-field_size 32768 --bind  # add in sudo nano /etc/supervisor/conf.d/gunicorn.conf
 client_max_body_size 100M;  # Increase the limit to 100MB add in nginx file
+
 ============================================
 
 sudo nano gunicorn.conf:
