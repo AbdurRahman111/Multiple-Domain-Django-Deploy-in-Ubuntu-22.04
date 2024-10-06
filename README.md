@@ -69,6 +69,8 @@ sudo apt-get install supervisor
 cd /etc/supervisor/conf.d/
 sudo touch gunicorn.conf
 
+--workers 4 --timeout 600 --limit-request-line 16384 --limit-request-fields 65536 --limit-request-field_size 32768 --bind 
+
 sudo nano gunicorn.conf:
 =========================================
 
